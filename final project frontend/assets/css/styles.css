@@ -1,0 +1,603 @@
+/* Cross‑platform base reset so Windows/macOS look similar */
+* , *::before, *::after {
+      box-sizing: border-box;
+    }
+
+body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: url("../images/aum3.jpg") no-repeat center center fixed;
+      background-size: cover;
+      background-position: center 70%;
+      min-height: 120vh;
+      overflow-y: auto;
+      -webkit-font-smoothing: antialiased; /* better match between Mac/Windows */
+      text-rendering: optimizeLegibility;
+    }
+
+    html {
+      /* normalize base text metrics across platforms */
+      font-size: 16px;
+      line-height: 1.4;
+      scrollbar-width: thick;
+      scrollbar-color: #999 #e6e6e6;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #b3b3b3; /* ash color */
+    }
+
+    hr.info-separator {
+      margin: 10px 0 2px 0; /* tighter gap above paragraph, a bit more below */
+    }
+
+    /* Make hr inside home page info panels span full panel width (over panel padding) */
+    .info-panel hr {
+      margin-left: -15px;
+    }
+
+    /* On the right home panel, keep a gap on the LEFT so hr does not touch the orange vertical line */
+    .info-panel--right hr {
+      margin-left: 0;      /* keep default 15px padding on left side (gap before orange line) */
+      margin-right: -15px; /* still extend to the outer right frame */
+    }
+
+    .info-contact {
+      margin-bottom: 2px; /* reduce space between paragraph and its hr */
+    }
+
+    /* WebKit scrollbar (Chrome, Edge, Safari including macOS) */
+    ::-webkit-scrollbar {
+      width: 14px;
+      height: 14px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #e6e6e6;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #999;
+      border-radius: 8px;
+      border: 3px solid #e6e6e6;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #777;
+    }
+
+    /* Normalize form controls (buttons/inputs) across browsers & macOS */
+    input[type="text"],
+    textarea,
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+      font-family: inherit;
+      font-size: 1rem;   /* consistent text size across OS/browsers */
+      line-height: 1.2;
+    }
+
+    /* HEADER (grid masthead to let logo span title+nav) */
+    .masthead {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      grid-template-rows: minmax(90px, auto) 46px;
+      width: 100%;
+      border: 2px solid #333;
+      background: #fff;
+    }
+
+    /* Centered frame matching screenshot */
+    .framed {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .logo-section {
+      grid-column: 1;
+      grid-row: 1 / span 2; /* span title and nav */
+      background: #fff;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #333;
+    }
+
+    .logo-section img {
+      height: 90px;
+    }
+
+    .title-section {
+      grid-column: 2;
+      grid-row: 1;
+      flex-grow: 1;
+      background: linear-gradient(to right, #ffcc80 0%, #ff8b33 40%, rgb(255, 85, 0)  100%);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;  /* shift title text slightly toward the logo */
+      padding: 10px 30px 10px 100px; /* a bit more left padding, slightly less right */
+      font-size: 2.4rem; /* slightly larger title like mock */
+      font-weight: bold;
+      color: black;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    /* NAVBAR inside masthead */
+    .masthead nav {
+      grid-column: 2;
+      grid-row: 2;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      padding: 8px 0; /* slightly tighter height like mock */
+      /* border-top: 2px solid #333; */
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.0rem; /* slightly smaller nav text like mock */
+      padding: 6px 12px;
+    }
+
+    nav a:hover {
+      background-color: gray;
+      color: black;
+    }
+
+    nav a.active {
+      color: rgb(255, 106, 0);
+    }
+
+    /* MAIN CONTENT */
+    .content-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background-color: rgba(240, 240, 240, 0.95);
+      
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      /* border-top: 2px solid #333; */
+      /* border-bottom: 2px solid #333; */
+    }
+
+    /* FOOTER */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      background-color: rgb(255, 85, 0);
+      border-top: 2px solid #333;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      border-bottom: 2px solid #333;
+      color: black;
+      font-weight: bold;
+      margin: 0; /* avoid gaps below content */
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .footer-left {
+      text-align: left;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      padding-left: 16px; /* space at the beginning of address */
+    }
+
+    .footer-center {
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .footer-right { padding-right: 10px; } /* space after Facebook icon */
+
+    .footer-right img {
+      width: 28px;
+      height: 28px;
+      margin-left: 6px;
+      vertical-align: middle;
+      transition: transform 0.2s ease;
+    }
+
+    .footer-right img:hover {
+      transform: scale(1.1);
+    }
+ 
+    /* Home page specific panels */
+    .info-panel {
+      background-color: #d9d9d9; /* match description page panel background */
+      padding: 15px;
+      border-left: none;   /* remove colored inner borders; outer frame is black */
+      border-right: none;
+    }
+
+    /* tighten space between section headings and text on home page */
+    .info-panel h3 {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+
+    .info-panel p {
+      text-align: justify;
+      margin-top: 2px;   /* reduce gap below h3 */
+      margin-bottom: 8px;
+    }
+
+    /* only center vertical line between columns should be orange */
+    .content-container .info-panel--right {
+      position: relative;
+    }
+
+    .content-container .info-panel--right::before {
+      content: "";
+      position: absolute;
+      top: 24px;
+      bottom: 45px;
+      left: -2px;
+      border-left: 2px solid salmon;    /* center vertical line from right box side */
+    }
+
+    /* Description page panels and table */
+    .desc-panel {
+      background-color: #d9d9d9; /* light gray like screenshot */
+      padding: 20px;
+    }
+
+    /* Make hr inside description panels span full panel width (over 20px padding) */
+    .desc-panel hr {
+      margin-left: -15px;
+    }
+
+    /* On the right/secondary description panel, keep a gap on the LEFT so hr does not touch the orange vertical line */
+    .desc-panel--secondary hr {
+      margin-left: 0;       /* keep default 20px padding on left side (gap before orange line) */
+      margin-right: -20px;  /* still extend to the outer right frame */
+    }
+
+    /* tighten space between headings and text on description page panels */
+    .desc-panel h3 {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+
+    .desc-panel p {
+      text-align: justify;
+      padding-right: 8px;
+      margin-top: 8px;
+    }
+
+    .desc-points {
+      margin: 0 0 0 16px;
+      padding: 0;
+    }
+
+    .desc-points li {
+      margin-bottom: 8px;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      border: 2px solid #333; /* strong outer frame */
+      background: #bfbfbf;    /* table body gray */
+      table-layout: fixed;    /* respect colgroup widths */
+    }
+
+    .styled-table th,
+    .styled-table td {
+      border: 1px solid #333;
+      padding: 10px 12px;
+      line-height: 1.25;
+      font-size: 0.95rem;
+    }
+
+    .styled-table thead tr:first-child th {
+      background: #6f6f6f; /* darkest band */
+      color: #000;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.05rem;
+      padding: 8px 12px;
+      border-bottom: 2px solid #333;
+    }
+
+    .styled-table thead tr:nth-child(2) th {
+      background: #9a9a9a; /* slightly lighter header */
+      color: #000;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.1;
+    }
+
+    .styled-table tbody td {
+      background: #b5b5b5;
+      color: #000;
+      padding: 4px 8px; /* reduced padding to make tbody rows shorter */
+      line-height: 1.1; /* slightly tighter line height */
+    }
+
+    .styled-table tbody td:nth-child(1) {
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .styled-table tbody td:nth-child(2),
+    .styled-table tbody td:nth-child(3) {
+      text-align: center;
+    }
+
+    .styled-table col:nth-child(1) { width: 40%; }
+    .styled-table col:nth-child(2) { width: 25%; }
+    .styled-table col:nth-child(3) { width: 35%; }
+
+    /* only center vertical line between columns should be orange (right column box) */
+    .content-container .desc-panel--secondary {
+      position: relative;
+    }
+
+    .content-container .desc-panel--secondary::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      bottom: 24px;
+      left: -2px;
+      border-left: 2px solid salmon;
+    }
+
+    /* TA Application page */
+    .ta-layout {
+      display: grid;
+      grid-template-columns: 1fr; /* single column for form */
+      background-color: #d9d9d9; /* match form background across content area */
+      border: 1px solid #aaa;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      border-top: 2px solid #333;   /* align to nav bottom edge */
+      border-bottom: 2px solid #333;/* align to footer top edge */
+    }
+
+    .ta-card {
+      max-width: 50%;
+      margin: 30px auto;
+      background: #d9d9d9;
+      border: 2px solid #c77;
+      padding: 20px 24px;
+      border-top: 2px solid #b3b3b3;   /* ash top border */
+      border-bottom: 2px solid #b3b3b3;/* ash bottom border */
+      border-left: 2px solid salmon;   /* orange left border */
+      border-right: 2px solid salmon;  /* orange right border */
+    }
+
+    .ta-card h2 { margin: 0 0 12px; color: #000; padding-bottom: 8px; }
+    .ta-card h3 { margin: 6px 0 8px; color: #000; font-size: larger;}
+
+    .ta-field { display: flex; align-items: center; margin-bottom: 12px; }
+    .ta-field label { width: 90px; color: #333; font-weight: bold; }
+    .ta-field input[type="text"],
+    .ta-field textarea {
+      width: 160px;
+      padding: 4px;
+      border: 1px solid #999;
+      background: #fff;
+    }
+    .ta-field textarea { height: 90px; resize: vertical; }
+
+    .ta-field--comments {
+      align-items: flex-start;
+    }
+
+    .ta-gpa-input {
+      width: 50px;
+    }
+
+    .ta-gender-options label + label {
+      margin-left: 16px;
+    }
+
+    .ta-actions {
+      display: flex;
+      margin-top: 24px;
+      gap: 30px; /* space between Submit and Reset */
+      margin-left: 50px;
+    }
+    .ta-actions button {
+      padding: 6px 16px;
+      min-width: 90px;  /* equal width for Submit and Reset */
+      text-align: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 2px solid gray;      /* remove default button border for TA buttons */
+    }
+
+    /* GPA Calculator page */
+    .gpa-layout {
+      display: grid;
+      grid-template-columns: 1fr; /* single column for form */
+      background: #d9d9d9;
+      border: 1px solid #aaa;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      border-top: 2px solid #333;   /* align to nav bottom edge */
+      border-bottom: 2px solid #333;/* align to footer top edge */
+    }
+
+    .gpa-card {
+      max-width: 90%;
+      margin: 30px auto;
+      background: #d9d9d9;
+      border-top: 2px solid #b3b3b3;   /* ash top border */
+      border-bottom: 2px solid #b3b3b3;/* ash bottom border */
+      border-left: 2px solid salmon;   /* orange left border */
+      border-right: 2px solid salmon;  /* orange right border */
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .gpa-title { margin: 0 0 12px; color: #000; }
+    .gpa-subtitle { margin: 6px 0 16px; color: #000; white-space: normal; font-size: 0.9rem; }
+
+    .gpa-grid {
+      display: grid;
+      grid-template-columns: 120px 180px 180px;
+      gap: 35px 40px; /* more vertical space between courses, same horizontal gap */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gpa-grid-header {
+      font-weight: bold;
+      font-size: larger;
+    }
+
+    .gpa-grid-header--credits {
+      margin-left: -20px;
+    }
+
+    .gpa-grid-header--grade {
+      margin-left: 9px;
+    }
+
+    .gpa-label {
+      font-size: larger;
+    }
+
+    .gpa-input {
+      width: 100px;
+      padding: 2px;
+      border: 1px solid #999;
+      background:#fff;
+      font-weight: bold; /* bold text in input fields */
+    }
+
+    .gpa-input:focus {
+      outline: none;
+      border: 2px solid blue;
+    }
+
+    .gpa-result {
+      width: 100px;
+      padding: 2px;
+      background: #A9A9A9;
+      font-weight: bold;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.3); /* shadow only when result is shown */
+      border-top: 3px solid #000;   /* thicker black top border when result present */
+      border-left: 3px solid #000;  /* thicker black left border when result present */
+    }
+
+    .gpa-actions {
+      display: flex;
+      gap: 30px;
+      margin-top: 16px;
+      justify-content: center;
+      padding: 4px 20px;
+      font-size: 0.95rem;
+    }
+
+    .gpa-actions button {
+      padding: 6px 26px;
+      background-color: #e3e3e3; 
+      min-width: 90px;  
+      text-align: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 2px solid gray;
+    }
+
+    .gpa-actions button:hover {
+      background-color: #d5d5d5; /* slightly darker on hover */
+    }
+
+    /* Survey Data page */
+    .survey-layout {
+      display: grid;
+      grid-template-columns: 1fr; /* single column for form */
+      place-items: center; /* center inner card */
+      background-color: rgba(240, 240, 240, 0.95);
+      border: 1px solid #aaa;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      border-top: 2px solid #333;   /* align to nav bottom edge */
+      border-bottom: 2px solid #333;/* align to footer top edge */
+    }
+
+    .survey-card {
+      width: 620px;
+      max-width: 90%;
+      margin: 30px auto;
+      background: #d9d9d9;
+      border: 2px solid #c77;
+      padding: 20px 24px;
+    }
+
+    .survey-card h2 {
+      margin: 0 0 12px;
+      color: #000;
+      text-align: center;
+    }
+
+    .survey-data {
+      margin-top: 8px;
+    }
+
+    .survey-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #eee;
+    }
+
+    .survey-table th,
+    .survey-table td {
+      border: 1px solid #999;
+      padding: 6px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .survey-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+      gap: 16px;
+    }
+
+    .survey-actions button {
+      padding: 8px 16px;
+    }
+
+    @media (max-width: 768px) {
+      .content-container {
+        grid-template-columns: 1fr;
+      }
+
+      .masthead {
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .logo-section img {
+        height: 80px;
+      }
+
+      .title-section {
+        font-size: 1.8rem;
+        padding: 8px 12px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 16px;
+        padding: 6px 8px;
+      }
+
+      nav a {
+        font-size: 0.95rem;
+      }
+    }
